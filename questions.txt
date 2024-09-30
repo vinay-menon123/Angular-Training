@@ -1,0 +1,276 @@
+question.model.ts:
+
+typescript
+Copy code
+export interface Question {
+  id: number;
+  text: string;
+  options: string[];
+  answer: string;
+}
+3. Create a Question Service
+The QuestionService will hold the list of questions and help navigate between them.
+
+question.service.ts:
+
+typescript
+Copy code
+import { Injectable } from '@angular/core';
+import { Question } from './question.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class QuestionService {
+  private questions: Question[] = [
+    { id: 1, text: 'What is your favorite color?', options: ['Red', 'Blue', 'Green', 'Yellow'], answer: '' },
+    { id: 2, text: 'What is your favorite animal?', options: ['Dog', 'Cat', 'Bird', 'Fish'], answer: '' },
+    { id: 3, text: 'What is your favorite food?', options: ['Pizza', 'Burger', 'Pasta', 'Salad'], answer: '' },
+    // Add more questions (up to 10)
+  ];
+
+  getQuestions(): Question[] {
+    return this.questions;
+  }
+
+  setAnswer(questionId: number, answer: string) {
+    const question = this.questions.find(q => q.id === questionId);
+    if (question) {
+      question.answer = answer;
+    }
+  }
+}
+4. Create the Question Component
+The QuestionComponent will display each question and allow the user to select an answer.
+
+question.component.ts:
+
+typescript
+Copy code
+import { Component, OnInit } from '@angular/core';
+import { QuestionService } from '../question.service';
+import { Router } from '@angular/router';
+import { Question } from '../question.model';
+
+@Component({
+  selector: 'app-question',
+  templateUrl: './question.component.html',
+  styleUrls: ['./question.component.css']
+})
+export class QuestionComponent implements OnInit {
+  currentQuestionIndex: number = 0;
+  questions: Question[] = [];
+
+  constructor(private questionService: QuestionService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.questions = this.questionService.getQuestions();
+  }
+
+  nextQuestion(answer: string): void {
+    // Save the current answer
+    this.questionService.setAnswer(this.questions[this.currentQuestionIndex].id, answer);
+    
+    // Move to next question
+    this.currentQuestionIndex++;
+
+    // If all questions are answered, navigate to the registration page
+    if (this.currentQuestionIndex >= this.questions.length) {
+      this.router.navigate(['/register']);
+    }
+  }
+}
+question.component.html:
+
+html
+Copy code
+<div *ngIf="questions.length">
+  <h2>{{ questions[currentQuestionIndex].text }}</h2>
+  <div *ngFor="let option of questions[currentQuestionIndex].options">
+    <label>
+      <input type="radio" name="answer" (click)="nextQuestion(option)" /> {{ option }}
+    </label>
+  </div>
+</div>
+question.component.css:
+
+css
+Copy code
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin: 0.5rem 0;
+}
+
+input[type="radio"] {
+  margin-right: 0.5rem;
+}
+5. Create a Registration Component
+After the user answers all the questions, they will be redirected to the registration page.
+
+register.component.ts:
+
+typescript
+Copy code
+import { Component } from '@angular/core';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
+})
+export class RegisterComponent {
+  username = '';
+  email = '';
+  password = '';
+  
+  constructor(private authService: AuthService, private router: Router) {}
+
+  registerUser() {
+    this.authService.register({ username: this.username, email: this.email, password: this.password }).subscribe(
+      () => {
+        this.router.navigate(['/dashboard']);
+      },
+      (error) => {
+        console.error('Registration failed', error);
+      }
+    );
+  }
+}
+register.component.html:
+
+html
+Copy code
+<div class="register-container">
+  <h2>Register</h2>
+  <form (ngSubmit)="registerUser()">
+    <div class="form-group">
+      <input type="text" [(ngModel)]="username" name="username" placeholder="Username" required />
+    </div>
+    <div class="form-group">
+      <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required />
+    </div>
+    <div class="form-group">
+      <input type="password" [(ngModel)]="password" name="password" placeholder="Password" required />
+    </div>
+    <button type="submit">Register</button>
+  </form>
+</div>
+register.component.css:
+
+css
+Copy code
+.register-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #218838;
+}
+6. Create the Auth Service
+Create an AuthService to handle user registration.
+
+auth.service.ts:
+
+typescript
+Copy code
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private apiUrl = 'https://your-backend-url/api';  // Replace with your actual backend URL
+
+  constructor(private http: HttpClient) {}
+
+  register(user: { username: string; email: string; password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, user);
+  }
+}
+7. Set Up Routes
+Now set up routing so that the user is redirected to the registration page after answering all the questions.
+
+app-routing.module.ts:
+
+typescript
+Copy code
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { QuestionComponent } from './question/question.component';
+import { RegisterComponent } from './register/register.component';
+
+const routes: Routes = [
+  { path: '', component: QuestionComponent },
+  { path: 'register', component: RegisterComponent },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+8. App Module Setup
+Finally, declare and import the necessary modules in the app.module.ts.
+
+app.module.ts:
+
+  
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { QuestionComponent } from './question/question.component';
+import { RegisterComponent } from './register/register.component';
+import { AuthService } from './auth.service';
+import { QuestionService } from './question.service';
+
+@NgModule({
+  declarations: [AppComponent, QuestionComponent, RegisterComponent],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  providers: [AuthService, QuestionService],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
