@@ -1,4 +1,22 @@
-  <div class="main-container d-flex">
+<script>
+      $(".sidebar ul li").on('click', function () {
+            $(".sidebar ul li.active").removeClass('active');
+            $(this).addClass('active');
+        });
+
+        $('.open-btn').on('click', function () {
+            $('.sidebar').addClass('active');
+
+        });
+
+
+        $('.close-btn').on('click', function () {
+            $('.sidebar').removeClass('active');
+
+        })
+</script>
+
+<div class="main-container d-flex">
         <div class="sidebar" id="side_nav">
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
                 <h1 class="fs-4"><span class="bg-white text-dark rounded shadow px-2 me-2">CL</span> <span
