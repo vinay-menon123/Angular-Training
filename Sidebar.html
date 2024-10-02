@@ -1,84 +1,138 @@
-<script>
-      $('.collapseToggle').on('click', function() {
-	$(".sidebar").toggleClass('sidebar--Collapse');
-	$('.main').toggleClass('main--slide');	$('#toggleIcon').toggleClass('rotate');
-});
-</script>
+  <!DOCTYPE html>
+  <html>
+  <!-- https://bootstrapious.com/p/bootstrap-sidebar -->
+  <body>
+      <div class="wrapper">
+          <!-- Sidebar  -->
+          <nav id="sidebar">
 
-<div class="row">
-	<div class="col-md-12">
-<nav class="navbar navbar-fixed-top navbar-inverse">
-  <div class="navbar-header">
-      <a class="navbar-brand" title="Look with your special eyes" href="#">
-        My Brand
-      </a>
-		
-		<ul class="nav navbar-nav">
-			<li class="active"><a href="https://www.codepen.io/erikashewan" target="_blank">Home</a></li>
-			<li><a href="http://www.erikashewan.com" target="_blank">About</a></li>
-			<li><a href="https://www.twitter.com/erikashewan" target="_blank">Contact Us</a></li>
-		</ul>
-    </div>
-</nav>	
-	</div>
-</div>
-<div class="row">
-<div class="sidebar">
+              <div class="sidebar-header">
 
-	<div class="collapseToggle">
-			<span id="toggleIcon" class="fa fa-chevron-left"></span>
-		</div>
+                  <h4>Dacor Sidebar</h4>
 
-    <ul class="nav nav-sidebar">
+              </div>
 
-        <li>
-					<a href="https://www.codepen.io/erikashewan" target="_blank">
-						<span class="fa fa-codepen"></span> 
-						<span class="menuText">Home</span>
-					</a>
-        </li>
-			        <li> 
-					<a href="http://www.erikashewan.com" target="_blank">
-						<span class="fa fa-user-circle-o"></span> 
-						<span class="menuText">Profile</span>
-					</a>
-			</li>
-			
-			        <li> 
-					<a href="https://www.twitter.com/erikashewan" target="_blank">
-						<span class="fa fa-twitter"></span> 
-						<span class="menuText">@ErikaShewan</span>
-					</a>
-			</li>
-    </ul>
-</div>
-	<div class="main">
-			Collapsible Bootstrap Dashboard.css, using CSS & JQuery. Abrupt changes don't exist in the physical world, so here we're using a variety of CSS transitions to demonstrate to the user what's happening in the interface.
-		<br/>
-		<br/>
-		<ul>
-			<li> <strong>Stateful Toggle</strong> </li>
-				<ul>
-					<li>
-						The cheveron rotates as the menu collapses. This tells the user that the meaning of the icon has changed, and that clicking on it again will make the button perform an action differently. In this case, the menu will re-expand.
-					</li>
-				</ul>
-			</li>
-		</ul>
-		
-		
-		<ul>
-			<li> <strong>Animated Collapse</strong></li>
-				<ul>
-					<li>
-						The transition of the width & fading of the labels tells the user the menu options didn't just disappear or get cut in half. The menu slides to the left and the labels fade out to convey to the user that the menu is collapsing to give them more screenspace.
-					</li>
-				</ul>
-			</li>
-		</ul>
-</div>
-	</div>
+              <ul class="list-unstyled components">
+                  <p>Dummy Heading</p>
+                  <li class="active">
+                      <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+                      <ul class="collapse list-unstyled" id="homeSubmenu">
+                          <li>
+                              <a href="#">Home 1</a>
+                          </li>
+                          <li>
+                              <a href="#">Home 2</a>
+                          </li>
+                          <li>
+                              <a href="#">Home 3</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li>
+                      <a href="#">About</a>
+                  </li>
+                  <li>
+                      <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+                      <ul class="collapse list-unstyled" id="pageSubmenu">
+                          <li>
+                              <a href="#">Page 1</a>
+                          </li>
+                          <li>
+                              <a href="#">Page 2</a>
+                          </li>
+                          <li>
+                              <a href="#">Page 3</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li>
+                      <a href="#">Portfolio</a>
+                  </li>
+                  <li>
+                      <a href="#">Contact</a>
+                  </li>
+              </ul>
 
+              <ul class="list-unstyled CTAs">
+                  <li>
+                      <a href="#" class="download">Download source</a>
+                  </li>
+                  <li>
+                      <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+                  </li>
+              </ul>
+          </nav>
 
+          <!-- Page Content  -->
+          <div id="content">
 
+              <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                  <div class="container-fluid">
+                      <button type="button" id="sidebarCollapse" 
+                          class="btn text-sidebar bg-turbo-yellow ">
+                          <i id="collapseIcon" class="fas fa-arrow-left"></i>
+                          <span></span>
+                      </button>
+                      <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                          <i class="fas fa-align-justify"></i>
+                      </button>
 
+                      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                          <ul class="nav navbar-nav ml-auto">
+                              <li class="nav-item active">
+                                  <a class="nav-link" href="#">Page</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link" href="#">Page</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link" href="#">Page</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link" href="#">Page</a>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+              </nav>
+
+              <h2>Collapsible Sidebar Using Bootstrap 4</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+              <div class="line"></div>
+
+              <h2>Lorem Ipsum Dolor (1)</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+              <div class="line"></div>
+
+              <h2>Lorem Ipsum Dolor (2)</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+              <div class="line"></div>
+
+              <h3>Lorem Ipsum Dolor (3)</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+      </div>
+
+      <!-- jQuery CDN - Slim version (=without AJAX) -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <!-- Popper.JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+      <!-- Bootstrap JS -->
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+      <script type="text/javascript">
+          $(document).ready(function () {
+              $('#sidebarCollapse').on('click', function () {
+                  $('#sidebar').toggleClass('active');
+                 $('#sidebarCollapse').find('#collapseIcon').toggleClass('fa-arrow-left').toggleClass('fa-arrow-right');
+
+              });
+          });
+      </script>
+  </body>
+
+  </html>
